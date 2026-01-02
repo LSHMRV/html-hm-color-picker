@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>HM Farbtool – Palette & Harmonien</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>HanseMerkur Farbtool</h1>
+    <div class="actions">
+      <label class="file-btn">
+        <input type="file" id="importFile" accept="application/json" hidden />
+        <span>Palette importieren (JSON)</span>
+      </label>
+      <button id="exportBtn">Palette exportieren</button>
+      <button id="resetBtn" title="Lokale Änderungen zurücksetzen">Zurücksetzen</button>
+    </div>
+  </header>
+
+  <main class="split">
+    <!-- LEFT: Palette / Auswahl -->
+    <section class="panel left" id="leftPanel">
+      <div class="panel-header">
+        <input id="searchInput" type="text" placeholder="Suche nach Name oder Hex …" />
+        <div class="picker-row">
+          <label for="freePicker">Freie Farbe:</label>
+          <input id="freePicker" type="color" />
+          <input id="freeHex" type="text" placeholder="#RRGGBB" />
+          <button id="useFreeColor">Übernehmen</button>
+        </div>
+      </div>
+
+      <div id="paletteContainer" class="palette-container"></div>
+    </section>
+
+    <div class="divider" id="divider" title="Ziehen zum Größenändern"></div>
+
+    <!-- RIGHT: Ergebnisse -->
+    <section class="panel right" id="rightPanel">
+      <div class="current-color">
+        <div class="swatch" id="currentSwatch"></div>
+        <div class="current-meta">
+          <div><strong id="currentName">—</strong></div>
+          <div><code id="currentHex">—</code> · <span id="currentHsl">—</span></div>
+          <button id="copyHex">HEX kopieren</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tints">Abstufungen</button>
+        <button class="tab-btn" data-tab="harmonies">Harmonien</button>
+        <button class="tab-btn" data-tab="accessibility">Kontrast (WCAG)</button>
+        <button class="tab-btn" data-tab="cssvars">CSS Variablen</button>
+      </div>
+
+      <div class="tab-content active" id="tab-tints">
+        <div class="tints-controls">
+          <label>Schritte: <input type="range" id="tintSteps" min="3" max="12" value="8" /></label>
+          <span id="tintStepsVal">8</span>
+        </div>
+        <div class="swatch-grid" id="tintsGrid"></div>
+      </div>
+
+      <div class="tab-content" id="tab-harmonies">
+        <div class="harmonies-controls">
+          <label>Analog-Winkel: <input type="range" id="analogAngle" min="10" max="60" value="30" /></label>
+          <span id="analogAngleVal">30°</span>
+        </div>
+        <div class="harmony-block">
+          <h3>Analogous</h3>
+          <div class="swatch-row" id="analogousRow"></div>
+        </div>
+        <div class="harmony-block">
+          <h3>Complementary</h3>
+          <div class="swatch-row" id="complementaryRow"></div>
+        </div>
+        <div class="harmony-block">
+          <h3>Split-Complementary</h3>
+          <div class="swatch-row" id="splitCompRow"></div>
+        </div>
+        <div class="harmony-block">
+          <h3>Triadic</h3>
+          <div class="swatch-row" id="triadicRow"></div>
+        </div>
+        <div class="harmony-block">
+          <h3>Tetradic</h3>
+          <div class="swatch-row" id="tetradicRow"></div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-accessibility">
+        <div class="contrast-block">
+          <h3>Kontrast gegen Weiß / Schwarz</h3>
+          <div class="contrast-row" id="contrastRow"></div>
+        </div>
+        <div class="contrast-block">
+          <h3>Empfohlene Textfarbe</h3>
+          <p id="textRecommendation">—</p>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-cssvars">
+        <div class="cssvars-block">
+          <h3>CSS Variablen aus Palette</h3>
+          <textarea id="cssVarsArea" rows="10" readonly></textarea>
+          <button id="copyCssVars">Variablen kopieren</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>© HanseMerkur – internes Farbtool. Erstellt mit Liebe ♡</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
